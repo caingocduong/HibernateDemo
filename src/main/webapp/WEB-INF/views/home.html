@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xlmns:th="https://www.thymeleaf.org" xmlns:xlmns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Spring_Dev</title>
+</head>
+<body>
+    <h2>List of Employees</h2>
+    <form th:action="@{/home}" method="post">
+        <table border="1">
+            <thead>
+            <tr>
+                <th>NAME</th>
+                <th>JOB</th>
+                <th>HIRING DATE</th>
+                <th>SALARY</th>
+                <th colspan="2">ACTION</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="emp:${allEmployees}">
+                <td th:text="${emp.employeeName}"></td>
+                <td th:text="${emp.job}"></td>
+                <td th:text="${emp.location}"></td>
+                <td th:text="${emp.salary}"></td>
+                <td>
+                    <button type="submit" name="edit" th:value="${emp.employeeId}">Edit</button>
+                </td>
+                <td>
+                    <button type="submit" name="delete" th:value="${emp.employeeId}">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+
+    <a th:href="@{/create-employee}">Create new employee</a>
+
+    <form th:action="@{/home}" method="post"
+          th:if="${employee}!=null"
+          th:object="${employee}">
+        <label>Edit Employee</label>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>NAME</th>
+                    <th>JOB</th>
+                    <th>LOCATION</th>
+                    <th>SALARY</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <input type="hidden" th:field="*{employeeId}"/>
+                <td>
+                    <input th:field="*{employeeName}"/>
+                </td>
+                <td>
+                    <input th:field="*{job}"/>
+                </td>
+                <td>
+                    <input th:field="*{location}"/>
+                </td>
+                <td>
+                    <input th:field="*{salary}"/>
+                </td>
+            </tbody>
+        </table>
+        <button type="submit" name="save">Save</button>
+    </form>
+</body>
+</html>
